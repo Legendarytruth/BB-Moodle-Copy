@@ -4,12 +4,14 @@ import Hoc from "./hoc/hoc";
 
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
+import Profile from "./containers/Profile";
 import HomepageLayout from "./containers/Home";
 
 const BaseRouter = () => (
   <Hoc>
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
+    <Route path="/profile/:id" component={Profile} />
     <Route exact path="/" component={HomepageLayout} />
   </Hoc>
 );

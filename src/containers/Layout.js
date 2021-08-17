@@ -24,6 +24,9 @@ class CustomLayout extends React.Component {
             <Link to="/">
               <Menu.Item header>Home</Menu.Item>
             </Link>
+            <Link to={`/profiles/${this.props.userId}`}>
+                  <Menu.Item header>Profile</Menu.Item>
+            </Link>
             {authenticated ? (
               <Menu.Item header onClick={() => this.props.logout()}>
                 Logout
@@ -111,7 +114,8 @@ class CustomLayout extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    authenticated: state.auth.token !== null
+    authenticated: state.auth.token !== null,
+    userId: state.auth.userId
   };
 };
 
