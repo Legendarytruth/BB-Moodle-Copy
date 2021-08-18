@@ -59,7 +59,7 @@ class AssignmentList extends React.PureComponent{
 
 const mapStateToProps = state => {
   return {
-    token: state.auth.token !== null,
+    token: state.auth.token,
     assignments: state.assignments.assignments,
     loading: state.assignments.loading
   };
