@@ -36,8 +36,7 @@ class AssignmentList extends React.PureComponent{
             {this.props.loading ? (
                 <Skeleton active/>
             ) : (
-                <div>
-                <Divider orientation="left">Assignment List</Divider>
+                <div style={{paddingTop: "50px"}}>
                 <h3 orientation="left">Assignment List</h3>
                 {console.log(this.props.assignments)}
                 {console.log(this.props)}

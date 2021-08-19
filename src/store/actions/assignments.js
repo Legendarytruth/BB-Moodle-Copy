@@ -3,7 +3,7 @@ import * as actionTypes from "./actionTypes";
 
 export const getASNTListStart = () => {
   return {
-    type: actionTypes.GET_ASSIGNMENT_LIST_START
+    type: actionTypes.GET_ASSIGNMENTS_LIST_START
   };
 };
 
@@ -37,6 +37,47 @@ export const getASNTS = token => {
       })
       .catch(err => {
         dispatch(getASNTListFail());
+      });
+  };
+};
+
+
+export const getASNTDetailStart = () => {
+  return {
+    type: actionTypes.GET_ASSIGNMENT_DETAIL_START
+  };
+};
+
+export const getASNTDetailSuccess = assignment => {
+  return {
+    type: actionTypes.GET_ASSIGNMENT_DETAIL_SUCCESS,
+    assignment
+  };
+};
+
+export const getASNTDetailFail = error => {
+  return {
+    type: actionTypes.GET_ASSIGNMENT_DETAIL_FAIL,
+    error: error
+  };
+};
+
+
+export const getASNTSDetail = (token, id) => {
+  return dispatch => {
+    dispatch(getASNTDetailStart());
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`
+    };
+    axios
+      .get(`http://127.0.0.1:8000/assignments/${id}/`)
+      .then(res => {
+        const assignment = res.data;
+        dispatch(getASNTDetailSuccess(assignment));
+      })
+      .catch(err => {
+        dispatch(getASNTDetailFail());
       });
   };
 };
