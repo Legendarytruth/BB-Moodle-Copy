@@ -24,6 +24,13 @@ class CustomLayout extends React.Component {
             <Link to="/">
               <Menu.Item header>Home</Menu.Item>
             </Link>
+              {
+                this.props.token !== null && this.props.is_teacher ? 
+                <Link to="/create">
+                <Menu.Item header>Create</Menu.Item>
+                </Link> :
+                null
+              }
             <Link to={`/profiles/${this.props.userId}`}>
                   <Menu.Item header>Profile</Menu.Item>
             </Link>
@@ -115,7 +122,9 @@ class CustomLayout extends React.Component {
 const mapStateToProps = state => {
   return {
     authenticated: state.auth.token !== null,
-    userId: state.auth.userId
+    userId: state.auth.userId,
+    token: state.auth.token,
+    is_teacher: state.auth.is_teacher
   };
 };
 

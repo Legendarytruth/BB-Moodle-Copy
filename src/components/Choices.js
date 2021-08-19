@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Radio, Input, Space } from 'antd';
 
 class Choices extends React.Component {

@@ -23,7 +23,7 @@ class AssignmentList extends React.PureComponent{
 
     renderItem(item) {
         return (
-          <Link to={`/assignments/${item.id}`}>
+          <Link to={`/assignment/${item.id}`}>
             <List.Item>{item.title}</List.Item>
           </Link>
         );
