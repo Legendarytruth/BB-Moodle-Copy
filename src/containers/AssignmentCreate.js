@@ -7,6 +7,7 @@ import Hoc from "../hoc/hoc";
 import { createASNT } from "../store/actions/assignments";
 
 const FormItem = Form.Item;
+
 class AssignmentCreate extends React.Component {
   state = {
     formCount: 1
@@ -26,7 +27,7 @@ class AssignmentCreate extends React.Component {
     });
   };
 
-  handleSubmit = e => {
+  /*handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -47,7 +48,25 @@ class AssignmentCreate extends React.Component {
         this.props.createASNT(this.props.token, asnt);
       }
     });
-  };
+  }; */
+  
+  onFinish = (values) => {
+    console.log('Received values of form: ', values);
+      const questions = [];
+      for (let i = 0; i < values.questions.length; i += 1) {
+        questions.push({
+          title: values.question[i],
+          choices: values.questions[i].choices.filter(el => el !== null),
+          answer: values.answers[i]
+        });
+      }
+      const asnt = {
+        teacher: this.props.username,
+        title: values.title,
+        questions
+      };
+      this.props.createASNT(this.props.token, asnt);
+  }
 
   render() {
     //const { getFieldDecorator } = this.props.form;
@@ -63,13 +82,14 @@ class AssignmentCreate extends React.Component {
               onClick={() => this.remove()}
             />
           ) : null}
-          {/* <QuestionForm id={i} {...this.props} /> */}
+          <QuestionForm id={i} {...this.props} />
           <Divider />
         </Hoc>
       );
     }
     return (
-      <Form onSubmit={this.handleSubmit}>
+      
+      <Form onFinish={this.onFinish}>
         <h1>Create an assignment</h1>
         <FormItem name= 'title' label={"Title: "} validateTrigger= {["onChange", "onBlur"]}
             rules= {[{required: true,message: "Please input a title"}]}>
@@ -91,7 +111,7 @@ class AssignmentCreate extends React.Component {
   }
 }
 
-//const WrappedAssignmentCreate = Form.create({})(AssignmentCreate);
+//const WrappedAssignmentCreate = Form.create()(AssignmentCreate);
 
 const mapStateToProps = state => {
   return {
