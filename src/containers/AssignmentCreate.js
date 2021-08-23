@@ -1,7 +1,9 @@
+  
 import React from "react";
 import { connect } from "react-redux";
 import { Form, Input, Button, Divider } from "antd";
 import Icon from "@ant-design/icons";
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import QuestionForm from "./QuestionForm";
 import Hoc from "../hoc/hoc";
 import { createASNT } from "../store/actions/assignments";
@@ -9,6 +11,7 @@ import { createASNT } from "../store/actions/assignments";
 const FormItem = Form.Item;
 
 class AssignmentCreate extends React.Component {
+  formRef = React.createRef();
   state = {
     formCount: 1
   };
@@ -53,11 +56,11 @@ class AssignmentCreate extends React.Component {
   onFinish = (values) => {
     console.log('Received values of form: ', values);
       const questions = [];
-      for (let i = 0; i < values.questions.length; i += 1) {
+      for (let i = 0; i < this.state.formCount; i += 1) {
         questions.push({
-          title: values.question[i],
-          choices: values.questions[i].choices.filter(el => el !== null),
-          answer: values.answers[i]
+          title: values[`question[${i}]`],
+          choices: values[`question[${i}]choices`],
+          answer: values[`answers[${i}]`]
         });
       }
       const asnt = {
@@ -75,12 +78,11 @@ class AssignmentCreate extends React.Component {
       questions.push(
         <Hoc key={i}>
           {questions.length > 0 ? (
-            <Icon
-              className="dynamic-delete-button"
-              type="minus-circle-o"
-              disabled={questions.length === 0}
-              onClick={() => this.remove()}
-            />
+      <MinusCircleOutlined
+      className="dynamic-delete-button"
+      disabled={questions.length === 1}
+      onClick={() => this.remove()}
+    />
           ) : null}
           <QuestionForm id={i} {...this.props} />
           <Divider />
@@ -89,7 +91,7 @@ class AssignmentCreate extends React.Component {
     }
     return (
       
-      <Form onFinish={this.onFinish}>
+      <Form onFinish={this.onFinish} >
         <h1>Create an assignment</h1>
         <FormItem name= 'title' label={"Title: "} validateTrigger= {["onChange", "onBlur"]}
             rules= {[{required: true,message: "Please input a title"}]}>
@@ -97,8 +99,8 @@ class AssignmentCreate extends React.Component {
         </FormItem>
         {questions}
         <FormItem>
-          <Button type="secondary" onClick={this.add}>
-            <Icon type="plus" /> Add question
+          <Button type="secondary" onClick={this.add}icon={<PlusOutlined />}>
+            Add question
           </Button>
         </FormItem>
         <FormItem>
