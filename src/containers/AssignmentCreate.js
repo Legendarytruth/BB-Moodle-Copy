@@ -56,10 +56,11 @@ class AssignmentCreate extends React.Component {
   onFinish = (values) => {
     console.log('Received values of form: ', values);
       const questions = [];
+      
       for (let i = 0; i < this.state.formCount; i += 1) {
         questions.push({
           title: values[`question[${i}]`],
-          choices: values[`question[${i}]choices`],
+          choices: values[`question[${i}]choices`].filter(el => el !== null),
           answer: values[`answers[${i}]`]
         });
       }
@@ -68,6 +69,7 @@ class AssignmentCreate extends React.Component {
         title: values.title,
         questions
       };
+      
       this.props.createASNT(this.props.token, asnt);
   }
 

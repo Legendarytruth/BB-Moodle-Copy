@@ -27,6 +27,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
     
     def create(self, request):
         data = request.data
+        #print(data)
         assignment = Assignment()
         teacher = User.objects.get(username=data['teacher'])
         assignment.teacher = teacher
@@ -39,15 +40,15 @@ class AssignmentSerializer(serializers.ModelSerializer):
             newQ.question = q['title']
             newQ.order = order
             newQ.save()
-
             for c in q['choices']:
                 newC = Choice()
                 newC.title = c
                 newC.save()
                 newQ.choices.add(newC)
-            
+                
             newQ.answer = Choice.objects.get(title=q['answer'])
             newQ.assignment = assignment
             newQ.save()
             order += 1
+            
         return assignment
