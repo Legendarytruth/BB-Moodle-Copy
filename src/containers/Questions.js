@@ -1,5 +1,6 @@
-import React from 'react';
-import { Steps, Button, message } from 'antd';
+import React from "react";
+import { Steps, Button } from "antd";
+
 const Step = Steps.Step;
 
 class Questions extends React.Component {

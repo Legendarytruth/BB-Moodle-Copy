@@ -31,8 +31,11 @@ class CustomLayout extends React.Component {
                 </Link> :
                 null
               }
-            <Link to={`/profiles/${this.props.userId}`}>
+            <Link to={`/profile/${this.props.userId}`}>
                   <Menu.Item header>Profile</Menu.Item>
+            </Link>
+            <Link to={`/assignment-list/`}>
+                  <Menu.Item header>Assignments</Menu.Item>
             </Link>
             {authenticated ? (
               <Menu.Item header onClick={() => this.props.logout()}>
